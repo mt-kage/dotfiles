@@ -67,7 +67,7 @@ casks=(
     atom
     visual-studio-code
     sourcetree
-    dockertoolbox
+    docker-toolbox
     virtualbox
     vagrant
     vagrant-manager
