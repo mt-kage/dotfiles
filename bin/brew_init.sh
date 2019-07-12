@@ -50,6 +50,7 @@ for formula in "${formulas[@]}"; do
         echo_warning "[${formula}] already exists."
     else
         brew install $formula || brew upgrade $formula
+        echo_info "[${formula}] installed."
     fi
 done
 
@@ -80,6 +81,7 @@ for cask in "${casks[@]}"; do
         echo_warning "[${cask}] already exists."
     else
         brew cask install $cask
+        echo_info "[${cask}] installed."
     fi
 
 done
