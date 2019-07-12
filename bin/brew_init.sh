@@ -37,6 +37,7 @@ formulas=(
     thefuck
     cowsay
     anyenv
+    direnv
     gibo
     jq
     protobuf
