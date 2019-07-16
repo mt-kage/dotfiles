@@ -29,6 +29,7 @@ brew "vim"
 brew "wget"
 
 cask "atom"
+cask "clipy"
 cask "cyberduck"
 cask "docker-toolbox"
 cask "funter"
