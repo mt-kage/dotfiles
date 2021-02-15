@@ -57,6 +57,9 @@ function initialize_macos() {
   defaults write com.apple.screencapture show-thumbnail -bool false
   defaults write com.apple.screencapture save-selections -bool false
 
+  # default shell
+  chsh -s /bin/bash
+
   echo "initialize macos success!"
 }
 
