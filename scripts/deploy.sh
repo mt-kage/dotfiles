@@ -8,7 +8,6 @@ function deploy_settings() {
   for file in .??*; do
       [[ "$file" = ".git" ]] && continue
       [[ "$file" = ".DS_Store" ]] && continue
-      echo "deploy file.[$DOTFILES_DIR/$file => $HOME/$file]"
       ln -fvns "$DOTFILES_DIR/$file" "$HOME/$file"
   done
 
