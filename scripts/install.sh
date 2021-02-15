@@ -8,6 +8,10 @@ readonly ARCHIVE_FILE="$GIT_DEFAULT_BRANCH.tar.gz"
 readonly ARCHIVE_URL="https://github.com/mt-kage/dotfiles/archive/$ARCHIVE_FILE"
 
 
+function exists_command() {
+  type -a $1 >/dev/null 2>&1
+}
+
 function execute() {
     echo "[${SCRIPT_DIR}/${1}.sh] START"
     /bin/bash "${SCRIPT_DIR}/${1}.sh"
@@ -16,11 +20,11 @@ function execute() {
 function download() {
   if [ ! -d ${DOTFILES_DIR} ]; then
     echo "Download dotfiles start."
-    if has "git"; then
+    if exists_command "git"; then
       echo "use git."
       git clone ${GIT_REPOSITORY_URL} ${DOTFILES_DIR}
-    elif has "curl" || has "wget"; then
-      if has "curl"; then
+    elif exists_command "curl" || exists_command "wget"; then
+      if exists_command "curl"; then
         echo "use curl."
         curl -L ${ARCHIVE_URL} -o ${ARCHIVE_FILE}
       else
@@ -31,12 +35,12 @@ function download() {
       rm -f ${ARCHIVE_FILE}
       mv -f dotfiles-${GIT_DEFAULT_BRANCH} ${DOTFILES_DIR}
     else
-      echo "curl or wget or git required."
+      echo "ERROR: curl or wget or git required."
       exit 1
     fi
     echo "Download dotfiles end."
   else
-    echo "dotfiles already exists."
+    echo "ERROR: dotfiles already exists."
     exit 1
   fi
 }
