@@ -60,6 +60,10 @@ function initialize_macos() {
   # default shell
   chsh -s /bin/bash
 
+  # sort launchpad
+  defaults write com.apple.dock ResetLaunchPad -bool true
+  killall Dock
+
   echo "initialize macos success!"
 }
 
