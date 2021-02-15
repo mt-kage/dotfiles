@@ -1,8 +1,8 @@
-# Brewfile
 cask_args appdir: "/Applications"
 tap "caskroom/cask"
 tap "homebrew/bundle"
 tap "homebrew/core"
+tap "phinze/homebrew-cask"
 
 brew "anyenv"
 brew "openssl"
@@ -28,17 +28,22 @@ brew "thefuck"
 brew "tree"
 brew "vim"
 brew "wget"
+brew "awscli"
 
-cask "atom"
 cask "clipy"
 cask "cyberduck"
+cask "docker"
 cask "docker-toolbox"
-cask "funter"
 cask "google-japanese-ime"
-cask "vagrant"
-cask "vagrant-manager"
-cask "virtualbox"
 cask "xquartz"
+cask "iterm2"
+cask "visual-studio-code"
+cask "postman"
+cask "intellij-idea"
+cask "1password"
+cask "google-chrome"
+cask "firefox"
+cask "zoom"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151
@@ -47,6 +52,6 @@ mas "iMovie", id: 408981434
 mas "Xcode", id: 497799835
 mas "Display Menu", id: 549083868
 mas "LINE", id: 539883307
-mas "Trello", id: 1278508951
 mas "Magnet", id: 441258766
 mas "TweetDeck", id: 485812721
+mas "RunCat", id: 1429033973

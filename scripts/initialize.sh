@@ -1,32 +1,72 @@
 #!/bin/bash
 
-function echo_info() {
-    printf "\e[37;42;1m${1}\e[m\n\n"
+function exists_command() {
+  type -a $1 >/dev/null 2>&1
 }
 
-function echo_warning() {
-    printf "\e[37;43;4m${1}\e[m\n\n"
+function initialize_brew() {
+  if exists_command "brew"; then
+    echo "brew already exists. install skipped."
+  else
+    echo "installing brew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+
+  echo "initialize brew..."
+  brew doctor
+  brew update
+  brew upgrade
+  brew bundle
+  brew cleanup -s
+
+  echo "initialize brew success!"
 }
 
-echo_info "installing homebrew..."
-which brew >/dev/null 2>&1 || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+function initialize_anyenv() {
+  if exists_command "anyenv"; then
+    echo "initialize anyenv..."
+    anyenv init
+    echo "initialize anyenv success!"
+  else
+    echo "ERROR: anyenv required."
+    exit 1
+  fi
+}
 
-echo_info "run brew doctor..."
-which brew >/dev/null 2>&1 && brew doctor
+function initialize_macos() {
+  echo "initialize macos..."
+  # remove localized file
+  rm ~/Applications/.localized
+  rm ~/Documents/.localized
+  rm ~/Downloads/.localized
+  rm ~/Desktop/.localized
+  rm ~/Public/.localized
+  rm ~/Pictures/.localized
+  rm ~/Music/.localized
+  rm ~/Movies/.localized
+  rm ~/Library/.localized
+  rm /Applications/.localized
 
-echo_info "run brew update..."
-which brew >/dev/null 2>&1 && brew update
+  # mkdir
+  mkdir ~/Projects
+  mkdir ~/Pictures/Screenshots
 
-echo_info "run brew upgrade..."
-brew upgrade
+  # screenshot settings
+  defaults write com.apple.screencapture name "Screenshot"
+  defaults write com.apple.screencapture location "~/Pictures/Screenshots"
+  defaults write com.apple.screencapture show-thumbnail -bool false
+  defaults write com.apple.screencapture save-selections -bool false
 
-echo_info "run brew bundle..."
-brew bundle
+  echo "initialize macos success!"
+}
 
-echo_info "run brew cleanup..."
-brew cleanup -s
+function initialize() {
+  echo "initialize start."
+  initialize_brew
+  initialize_anyenv
+  initialize_macos
 
-echo_info "
-**************************************************
-               HOMEBREW INSTALLED!
-**************************************************"
+  echo "initialize success!"
+}
+
+initialize

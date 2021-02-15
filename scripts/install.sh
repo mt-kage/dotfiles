@@ -55,7 +55,8 @@ function install() {
 
   download
 
-#  execute initialize
+  cd ${DOTFILES_DIR}
+  execute initialize
 #  execute deploy
   echo "Install dotfiles success!"
 }
