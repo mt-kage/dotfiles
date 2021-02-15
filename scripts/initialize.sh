@@ -1,5 +1,10 @@
 #!/bin/bash
 
+readonly GIT_REMOTE_URL="https://github.com/mt-kage/dotfiles.git"
+readonly GIT_REMOTE_NAME="origin"
+readonly GIT_DEFAULT_BRANCH="master"
+
+
 function exists_command() {
   type -a $1 >/dev/null 2>&1
 }
@@ -20,6 +25,14 @@ function initialize_brew() {
   brew cleanup -s
 
   echo "initialize brew success!"
+}
+
+function initialize_dotfiles() {
+  git init
+  git remote add ${GIT_REMOTE_NAME} ${GIT_REMOTE_URL}
+  git add .
+  git checkout .
+  git pull ${GIT_REMOTE_NAME} ${GIT_DEFAULT_BRANCH}
 }
 
 function initialize_anyenv() {
@@ -70,6 +83,7 @@ function initialize_macos() {
 function initialize() {
   echo "initialize start."
   initialize_brew
+  initialize_dotfiles
   initialize_anyenv
   initialize_macos
 
