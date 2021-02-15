@@ -1,24 +1,26 @@
 #!/bin/bash
 
-function echo_info() {
-    printf "\e[37;42;1m${1}\e[m\n\n"
+readonly DOTFILES_DIR="$(dirname $(cd $(dirname $0); pwd))/configs"
+
+function deploy_settings() {
+  echo "deploy settings start..."
+  cd ${DOTFILES_DIR} || exit 1
+  for file in .??*; do
+      [[ "$file" = ".git" ]] && continue
+      [[ "$file" = ".DS_Store" ]] && continue
+      echo "deploy file.[$DOTFILES_DIR/$file => $HOME/$file]"
+      ln -fvns "$DOTFILES_DIR/$file" "$HOME/$file"
+  done
+
+  echo "deploy settings success!"
 }
 
-function echo_warning() {
-    printf "\e[37;43;4m${1}\e[m\n\n"
+function deploy() {
+  echo "deploy start."
+  deploy_settings
+
+  source ~/.bashrc
+  echo "deploy success!"
 }
 
-DOTPATH=$(dirname $(cd $(dirname $0); pwd))
-
-cd "$DOTPATH" || exit 1
-
-echo_info "copy start..."
-
-for file in .??*; do
-    [[ "$file" = ".git" ]] && continue
-    [[ "$file" = ".DS_Store" ]] && continue
-    [[ "$file" = ".travis.yml" ]] && continue
-    ln -fvns "$DOTPATH/$file" "$HOME/$file"
-done
-
-echo_info "copy end!"
+deploy
