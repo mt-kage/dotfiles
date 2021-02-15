@@ -2,9 +2,8 @@
 
 readonly DOTFILES_DIR="$HOME/dotfiles"
 readonly SCRIPT_DIR="$DOTFILES_DIR/scripts"
+readonly GIT_REMOTE_ORIGIN="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_DEFAULT_BRANCH="master"
-readonly ARCHIVE_FILE="$GIT_DEFAULT_BRANCH.tar.gz"
-readonly ARCHIVE_URL="https://github.com/mt-kage/dotfiles/archive/$ARCHIVE_FILE"
 
 
 function exists_command() {
@@ -17,31 +16,22 @@ function execute() {
 }
 
 function download() {
-  if [ ! -d ${DOTFILES_DIR} ]; then
+  if [ -d ${DOTFILES_DIR} ]; then
     echo "Download dotfiles start."
-    if exists_command "curl" || exists_command "wget"; then
-      if exists_command "curl"; then
-        echo "use curl."
-        curl -L ${ARCHIVE_URL} -o ${ARCHIVE_FILE}
-      else
-        echo "use wget."
-        wget ${ARCHIVE_URL}
-      fi
-      tar -zxvf ${ARCHIVE_FILE}
-      rm -f ${ARCHIVE_FILE}
-      mv -f dotfiles-${GIT_DEFAULT_BRANCH} ${DOTFILES_DIR}
+    if exists_command "git"; then
+      git pull ${GIT_REMOTE_ORIGIN} ${GIT_DEFAULT_BRANCH}
     else
-      echo "ERROR: curl or wget required."
+      echo "ERROR: git required."
       exit 1
     fi
     echo "Download dotfiles end."
   else
-    echo "ERROR: dotfiles already exists."
+    echo "ERROR: dotfiles required."
     exit 1
   fi
 }
 
-function install() {
+function update() {
   echo "           _        _                       __  _       _    __ _ _"
   echo " _ __ ___ | |_     | | ____ _  __ _  ___   / /_| | ___ | |_ / _(_) | ___  ___"
   echo "| '_ \` _ \\| __|____| |/ / _\` |/ _\` |/ _ \\ / / _\` |/ _ \\| __| |_| | |/ _ \\/ __|"
@@ -52,9 +42,8 @@ function install() {
   download
 
   cd ${DOTFILES_DIR}
-  execute initialize
   execute deploy
-  echo "Install dotfiles success!"
+  echo "Update dotfiles success!"
 }
 
-install
+update
