@@ -186,6 +186,3 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
-[user]
-	name = Yusuke
-	email = mail@mt-kage.dev
