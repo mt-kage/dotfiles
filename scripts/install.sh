@@ -20,10 +20,7 @@ function execute() {
 function download() {
   if [ ! -d ${DOTFILES_DIR} ]; then
     echo "Download dotfiles start."
-    if exists_command "git"; then
-      echo "use git."
-      git clone ${GIT_REPOSITORY_URL} ${DOTFILES_DIR}
-    elif exists_command "curl" || exists_command "wget"; then
+    if exists_command "curl" || exists_command "wget"; then
       if exists_command "curl"; then
         echo "use curl."
         curl -L ${ARCHIVE_URL} -o ${ARCHIVE_FILE}
@@ -35,7 +32,7 @@ function download() {
       rm -f ${ARCHIVE_FILE}
       mv -f dotfiles-${GIT_DEFAULT_BRANCH} ${DOTFILES_DIR}
     else
-      echo "ERROR: curl or wget or git required."
+      echo "ERROR: curl or wget required."
       exit 1
     fi
     echo "Download dotfiles end."
