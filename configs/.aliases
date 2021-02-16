@@ -46,3 +46,6 @@ alias reload="exec $SHELL -l"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# Generate SSH Keys.
+alias ssh-keygen="ssh-keygen -t rsa -b 4096"
