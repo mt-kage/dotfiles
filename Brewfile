@@ -1,5 +1,4 @@
 cask_args appdir: "/Applications"
-tap "caskroom/cask"
 tap "homebrew/bundle"
 tap "homebrew/core"
 tap "phinze/homebrew-cask"
@@ -32,7 +31,6 @@ brew "awscli"
 
 cask "clipy"
 cask "cyberduck"
-cask "docker"
 cask "docker-toolbox"
 cask "google-japanese-ime"
 cask "xquartz"
@@ -44,6 +42,7 @@ cask "1password"
 cask "google-chrome"
 cask "firefox"
 cask "zoom"
+cask "karabiner-elements"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151
