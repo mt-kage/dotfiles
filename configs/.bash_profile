@@ -49,6 +49,9 @@ complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes Syste
 # anyenv.
 eval "$(anyenv init - --no-rehash)"
 
+#direnv
+eval "$(direnv hook bash)"
+
 # git
 source /usr/local/etc/bash_completion.d/git-prompt.sh
 source /usr/local/etc/bash_completion.d/git-completion.bash
