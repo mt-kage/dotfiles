@@ -1,6 +1,7 @@
 #!/bin/bash
 
-readonly GIT_REMOTE_URL="https://github.com/mt-kage/dotfiles.git"
+readonly GIT_REMOTE_HTTPS_URL="https://github.com/mt-kage/dotfiles.git"
+readonly GIT_REMOTE_SSH_URL="git@github.com:mt-kage/dotfiles.git"
 readonly GIT_REMOTE_NAME="origin"
 readonly GIT_DEFAULT_BRANCH="master"
 
@@ -29,10 +30,11 @@ function initialize_brew() {
 
 function initialize_dotfiles() {
   git init
-  git remote add ${GIT_REMOTE_NAME} ${GIT_REMOTE_URL}
+  git remote add ${GIT_REMOTE_NAME} ${GIT_REMOTE_HTTPS_URL}
   git add .
   git checkout .
   git pull ${GIT_REMOTE_NAME} ${GIT_DEFAULT_BRANCH}
+  git remote set-url ${GIT_REMOTE_NAME} ${GIT_REMOTE_SSH_URL}
 }
 
 function initialize_anyenv() {
