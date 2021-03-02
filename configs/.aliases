@@ -49,3 +49,6 @@ alias path='echo -e ${PATH//:/\\n}'
 
 # Generate SSH Keys.
 alias ssh-keygen="ssh-keygen -t rsa -b 4096"
+
+# Git
+alias brname="git symbolic-ref --short HEAD"
