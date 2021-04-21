@@ -4,7 +4,11 @@ readonly GIT_REMOTE_HTTPS_URL="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_REMOTE_SSH_URL="git@github.com:mt-kage/dotfiles.git"
 readonly GIT_REMOTE_NAME="origin"
 readonly GIT_DEFAULT_BRANCH="master"
+readonly UNAME=`uname -m`
 
+function is_arm() {
+  test "$UNAME" == "arm64";
+}
 
 function exists_command() {
   type -a $1 >/dev/null 2>&1
@@ -17,6 +21,13 @@ function initialize_brew() {
     echo "installing brew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
+
+  if is_arm; then
+    /opt/homebrew/bin/brew shellenv
+  else
+    /usr/local/bin/brew shellenv
+  fi
+  brew shellenv > ~/.path
 
   echo "initialize brew..."
   brew doctor
