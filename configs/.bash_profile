@@ -36,6 +36,18 @@ if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completio
 	complete -o default -o nospace -F _git g;
 fi;
 
+if which brew &> /dev/null && [ -f "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh" ]; then
+	source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh";
+fi;
+
+if which brew &> /dev/null && [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
+	source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash";
+fi;
+
+if which brew &> /dev/null && [ -f "$(brew --prefix)/etc/bash_completion.d/gibo-completion.bash" ]; then
+	source "$(brew --prefix)/etc/bash_completion.d/gibo-completion.bash";
+fi;
+
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
@@ -51,8 +63,3 @@ eval "$(anyenv init - --no-rehash)"
 
 #direnv
 eval "$(direnv hook bash)"
-
-# git
-source /usr/local/etc/bash_completion.d/git-prompt.sh
-source /usr/local/etc/bash_completion.d/git-completion.bash
-source /usr/local/etc/bash_completion.d/gibo-completion.bash
