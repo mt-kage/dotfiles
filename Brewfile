@@ -1,7 +1,7 @@
 cask_args appdir: "/Applications"
 tap "homebrew/bundle"
 tap "homebrew/core"
-tap "phinze/homebrew-cask"
+tap "homebrew/cask"
 
 brew "anyenv"
 brew "openssl"
@@ -28,6 +28,7 @@ brew "tree"
 brew "vim"
 brew "wget"
 brew "awscli"
+brew "bash-completion"
 
 cask "clipy"
 cask "cyberduck"
@@ -43,6 +44,10 @@ cask "google-chrome"
 cask "firefox"
 cask "zoom"
 cask "karabiner-elements"
+cask "virtualbox"
+cask "microsoft-auto-update"
+cask "microsoft-office"
+cask "slack"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151
