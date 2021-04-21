@@ -27,7 +27,6 @@ function initialize_brew() {
   else
     /usr/local/bin/brew shellenv
   fi
-  brew shellenv > ~/.path
 
   echo "initialize brew..."
   brew doctor
