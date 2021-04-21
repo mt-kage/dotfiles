@@ -58,7 +58,11 @@ complete -W "NSGlobalDomain" defaults;
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
 # anyenv.
-eval "$(anyenv init - --no-rehash)"
+if which anyenv &> /dev/null; then
+	eval "$(anyenv init - --no-rehash)";
+fi;
 
 #direnv
-eval "$(direnv hook bash)"
+if which direnv &> /dev/null; then
+	eval "$(direnv hook bash)";
+fi;
