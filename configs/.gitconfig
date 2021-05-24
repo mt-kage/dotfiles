@@ -189,3 +189,5 @@
 [user]
 	name = "mt-kage"
 	email = "mail@mt-kage.dev"
+[init]
+	defaultBranch = main
