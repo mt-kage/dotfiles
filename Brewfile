@@ -48,6 +48,8 @@ cask "virtualbox"
 cask "microsoft-auto-update"
 cask "microsoft-office"
 cask "slack"
+cask "parallels-client"
+cask "cinebench"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151
