@@ -50,6 +50,7 @@ cask "microsoft-office"
 cask "slack"
 cask "parallels-client"
 cask "cinebench"
+cask "amazon-workspaces"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151
