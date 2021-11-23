@@ -51,6 +51,7 @@ cask "slack"
 cask "parallels-client"
 cask "cinebench"
 cask "krisp"
+cask "fig"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151

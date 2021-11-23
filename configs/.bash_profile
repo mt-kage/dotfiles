@@ -62,7 +62,12 @@ if which anyenv &> /dev/null; then
 	eval "$(anyenv init - --no-rehash)";
 fi;
 
-#direnv
+# direnv
 if which direnv &> /dev/null; then
 	eval "$(direnv hook bash)";
 fi;
+
+# fig
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+
