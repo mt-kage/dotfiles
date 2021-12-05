@@ -2,6 +2,7 @@ cask_args appdir: "/Applications"
 tap "homebrew/bundle"
 tap "homebrew/core"
 tap "homebrew/cask"
+tap "homebrew/cask-drivers"
 
 brew "anyenv"
 brew "openssl"
@@ -52,6 +53,7 @@ cask "parallels-client"
 cask "cinebench"
 cask "krisp"
 cask "fig"
+cask "logitech-options"
 
 mas "Numbers", id: 409203825
 mas "Monity", id: 915542151
