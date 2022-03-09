@@ -3,33 +3,58 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 tap "homebrew/cask"
 tap "homebrew/cask-drivers"
+tap "homebrew/services"
 
 brew "anyenv"
-brew "openssl"
+brew "autoconf"
+brew "openssl@1.1"
+brew "python@3.9"
+brew "awscli"
+brew "bash-completion"
+brew "bison"
+brew "bzip2"
 brew "colordiff"
 brew "coreutils"
 brew "cowsay"
 brew "curl"
 brew "diff-so-fancy"
 brew "direnv"
+brew "docker"
+brew "docker-compose"
+brew "gcc"
 brew "gibo"
 brew "git"
 brew "git-secrets"
 brew "hub"
+brew "icu4c"
+brew "jpeg"
+brew "oniguruma"
 brew "jq"
+brew "krb5"
+brew "libedit"
+brew "libiconv"
+brew "libpng"
+brew "libxml2"
 brew "libzip"
-brew "mas"
 brew "lua"
-brew "peco"
+brew "mas"
 brew "protobuf"
+brew "mysql"
+brew "nghttp2"
+brew "openssl@3"
+brew "peco"
+brew "pkg-config"
+brew "re2c"
+brew "ruby"
 brew "sl"
 brew "ssh-copy-id"
+brew "telnet"
 brew "thefuck"
+brew "tidy-html5"
 brew "tree"
 brew "vim"
 brew "wget"
-brew "awscli"
-brew "bash-completion"
+brew "zlib"
 
 cask "clipy"
 cask "cyberduck"
@@ -55,13 +80,15 @@ cask "krisp"
 cask "fig"
 cask "logitech-options"
 
-mas "Numbers", id: 409203825
-mas "Monity", id: 915542151
+mas "Display Menu", id: 549083868
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
-mas "Xcode", id: 497799835
-mas "Display Menu", id: 549083868
+mas "Keynote", id: 409183694
 mas "LINE", id: 539883307
 mas "Magnet", id: 441258766
-mas "TweetDeck", id: 485812721
+mas "Monity", id: 915542151
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
 mas "RunCat", id: 1429033973
+mas "TweetDeck", id: 485812721
+mas "Xcode", id: 497799835
