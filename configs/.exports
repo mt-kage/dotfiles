@@ -31,3 +31,40 @@ export MANPAGER='less -X';
 
 # bash waring disable for macOS.
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+export PATH="$(brew --prefix bison)/bin:$PATH"
+export PATH="$(brew --prefix libxml2)/bin:$PATH"
+export PATH="$(brew --prefix bzip2)/bin:$PATH"
+export PATH="$(brew --prefix curl)/bin:$PATH"
+export PATH="$(brew --prefix libiconv)/bin:$PATH"
+export PATH="$(brew --prefix krb5)/bin:$PATH"
+export PATH="$(brew --prefix openssl@1.1)/bin:$PATH"
+export PATH="$(brew --prefix icu4c)/bin:$PATH"
+export PATH="$(brew --prefix tidy-html5)/lib:$PATH"
+
+export PKG_CONFIG_PATH="$(brew --prefix krb5)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix icu4c)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix libedit)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix libjpeg)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix libpng)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix libxml2)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix libzip)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix oniguruma)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix openssl@1.1)/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(brew --prefix tidy-html5)/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+export PHP_RPATHS=""
+export PHP_RPATHS="$PHP_RPATHS $(brew --prefix zlib)/lib"
+export PHP_RPATHS="$PHP_RPATHS $(brew --prefix bzip2)/lib"
+export PHP_RPATHS="$PHP_RPATHS $(brew --prefix curl)/lib"
+export PHP_RPATHS="$PHP_RPATHS $(brew --prefix libiconv)/lib"
+export PHP_RPATHS="$PHP_RPATHS $(brew --prefix libedit)/lib"
+
+export PHP_BUILD_CONFIGURE_OPTS=""
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-bz2=$(brew --prefix bzip2)"
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-iconv=$(brew --prefix libiconv)"
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-tidy=$(brew --prefix tidy-html5)"
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-external-pcre=$(brew --prefix pcre2)"
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-zip"
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --enable-intl"
+export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-pear"
