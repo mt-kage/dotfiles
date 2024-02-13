@@ -32,7 +32,6 @@ export MANPAGER='less -X';
 # bash waring disable for macOS.
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-<<<<<<< Updated upstream
 export PATH="$(brew --prefix bison)/bin:$PATH"
 export PATH="$(brew --prefix libxml2)/bin:$PATH"
 export PATH="$(brew --prefix bzip2)/bin:$PATH"
@@ -69,8 +68,6 @@ export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-external-pcre=
 export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-zip"
 export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --enable-intl"
 export PHP_BUILD_CONFIGURE_OPTS="$PHP_BUILD_CONFIGURE_OPTS --with-pear"
-=======
+
 # protocol buffers import
 export PATH="/usr/local/opt/protobuf@3/bin:$PATH"
-
->>>>>>> Stashed changes
