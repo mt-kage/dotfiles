@@ -78,6 +78,20 @@ if which direnv &> /dev/null; then
 	eval "$(direnv hook bash)";
 fi;
 
+# python auto activate
+python_auto_activate() {
+	if [ -e ".venv" ]; then
+		if [ "${VIRTUAL_ENV}" != "$(pwd)/.venv" ]; then
+			source "$(pwd)/.venv/bin/activate"
+		fi
+	else
+		if [ "${VIRTUAL_ENV}" != "" ]; then
+		deactivate
+		fi
+	fi
+}
+precmd_functions+=(python_auto_activate)
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
