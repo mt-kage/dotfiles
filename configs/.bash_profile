@@ -79,8 +79,8 @@ if which direnv &> /dev/null; then
 fi;
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/yusuke.kageyama/.sdkman"
-[[ -s "/Users/yusuke.kageyama/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/yusuke.kageyama/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
