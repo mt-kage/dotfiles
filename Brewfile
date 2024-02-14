@@ -1,6 +1,5 @@
 tap "goodwithtech/r"
 tap "homebrew/bundle"
-tap "homebrew/cask-drivers"
 tap "homebrew/services"
 tap "knqyf263/trivy"
 
@@ -77,7 +76,6 @@ cask "clipy"
 cask "cyberduck"
 cask "deepl"
 cask "docker"
-cask "docker-toolbox"
 cask "fig"
 cask "firefox"
 cask "gather"
@@ -95,7 +93,6 @@ cask "microsoft-office"
 cask "parallels-client"
 cask "postman"
 cask "slack"
-cask "virtualbox"
 cask "visual-studio-code"
 cask "wkhtmltopdf"
 cask "xquartz"
@@ -107,7 +104,6 @@ mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "LINE", id: 539883307
 mas "Magnet", id: 441258766
-mas "Monity", id: 915542151
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "RunCat", id: 1429033973
