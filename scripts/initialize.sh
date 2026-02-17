@@ -1,105 +1,102 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/lib/common.sh"
 
 readonly GIT_REMOTE_HTTPS_URL="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_REMOTE_SSH_URL="git@github.com:mt-kage/dotfiles.git"
 readonly GIT_REMOTE_NAME="origin"
 readonly GIT_DEFAULT_BRANCH="master"
-readonly UNAME=`uname -m`
 
-function is_arm() {
-  test "$UNAME" == "arm64";
-}
-
-function exists_command() {
-  type -a $1 >/dev/null 2>&1
-}
-
-function initialize_brew() {
+initialize_brew() {
   if exists_command "brew"; then
-    echo "brew already exists. install skipped."
+    log_info "brew already exists. install skipped."
   else
-    echo "installing brew..."
+    log_info "installing brew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
   if is_arm; then
-    /opt/homebrew/bin/brew shellenv
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   else
-    /usr/local/bin/brew shellenv
+    eval "$(/usr/local/bin/brew shellenv)"
   fi
 
-  echo "initialize brew..."
+  log_info "initialize brew..."
   brew doctor
   brew update
   brew upgrade
   brew bundle
   brew cleanup -s
 
-  echo "initialize brew success!"
+  log_success "initialize brew"
 }
 
-function initialize_dotfiles() {
+initialize_dotfiles() {
+  log_info "initialize dotfiles..."
   git init
-  git remote add ${GIT_REMOTE_NAME} ${GIT_REMOTE_HTTPS_URL}
+  git remote add "${GIT_REMOTE_NAME}" "${GIT_REMOTE_HTTPS_URL}"
   git add .
   git checkout .
-  git pull ${GIT_REMOTE_NAME} ${GIT_DEFAULT_BRANCH}
-  git remote set-url ${GIT_REMOTE_NAME} ${GIT_REMOTE_SSH_URL}
+  git pull "${GIT_REMOTE_NAME}" "${GIT_DEFAULT_BRANCH}"
+  git remote set-url "${GIT_REMOTE_NAME}" "${GIT_REMOTE_SSH_URL}"
+  log_success "initialize dotfiles"
 }
 
-function initialize_anyenv() {
+initialize_anyenv() {
   if exists_command "anyenv"; then
-    echo "initialize anyenv..."
+    log_info "initialize anyenv..."
     anyenv init
-    echo "initialize anyenv success!"
+    log_success "initialize anyenv"
   else
-    echo "ERROR: anyenv required."
-    exit 1
+    log_warn "anyenv not found. skipped."
   fi
 }
 
-function initialize_macos() {
-  echo "initialize macos..."
+initialize_macos() {
+  if ! is_macos; then
+    log_warn "not macOS. skipped."
+    return
+  fi
+
+  log_info "initialize macos..."
+
   # remove localized file
-  rm ~/Applications/.localized
-  rm ~/Documents/.localized
-  rm ~/Downloads/.localized
-  rm ~/Desktop/.localized
-  rm ~/Public/.localized
-  rm ~/Pictures/.localized
-  rm ~/Music/.localized
-  rm ~/Movies/.localized
-  rm ~/Library/.localized
-  rm /Applications/.localized
+  rm -f ~/Applications/.localized
+  rm -f ~/Documents/.localized
+  rm -f ~/Downloads/.localized
+  rm -f ~/Desktop/.localized
+  rm -f ~/Public/.localized
+  rm -f ~/Pictures/.localized
+  rm -f ~/Music/.localized
+  rm -f ~/Movies/.localized
+  rm -f ~/Library/.localized
+  rm -f /Applications/.localized
 
   # mkdir
-  mkdir ~/Projects
-  mkdir ~/Pictures/Screenshots
+  mkdir -p ~/Projects
+  mkdir -p ~/Pictures/Screenshots
 
   # screenshot settings
   defaults write com.apple.screencapture name "Screenshot"
-  defaults write com.apple.screencapture location "~/Pictures/Screenshots"
+  defaults write com.apple.screencapture location "$HOME/Pictures/Screenshots"
   defaults write com.apple.screencapture show-thumbnail -bool false
   defaults write com.apple.screencapture save-selections -bool false
-
-  # default shell
-  chsh -s /bin/bash
 
   # sort launchpad
   defaults write com.apple.dock ResetLaunchPad -bool true
   killall Dock
 
-  echo "initialize macos success!"
+  log_success "initialize macos"
 }
 
-function initialize() {
-  echo "initialize start."
+initialize() {
+  log_info "initialize start."
   initialize_brew
   initialize_dotfiles
   initialize_anyenv
   initialize_macos
-
-  echo "initialize success!"
+  log_success "initialize complete!"
 }
 
 initialize

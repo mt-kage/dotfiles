@@ -131,7 +131,6 @@
 
 	# https://help.github.com/articles/signing-commits-using-gpg/
 	gpgsign = false
-	template = /Users/yusuke/.stCommitMsg
 
 [diff]
 

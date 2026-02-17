@@ -1,49 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 readonly DOTFILES_DIR="$HOME/dotfiles"
 readonly SCRIPT_DIR="$DOTFILES_DIR/scripts"
 readonly GIT_REMOTE_ORIGIN="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_DEFAULT_BRANCH="master"
 
+if [[ ! -d "${DOTFILES_DIR}" ]]; then
+  echo "[ERROR] dotfiles not found: ${DOTFILES_DIR}" >&2
+  exit 1
+fi
 
-function exists_command() {
-  type -a $1 >/dev/null 2>&1
-}
+source "${SCRIPT_DIR}/lib/common.sh"
 
-function execute() {
-    echo "[${SCRIPT_DIR}/${1}.sh] START"
-    /bin/bash "${SCRIPT_DIR}/${1}.sh"
-}
+download() {
+  log_info "Download dotfiles start."
 
-function download() {
-  if [ -d ${DOTFILES_DIR} ]; then
-    echo "Download dotfiles start."
-    if exists_command "git"; then
-      git pull ${GIT_REMOTE_ORIGIN} ${GIT_DEFAULT_BRANCH}
-    else
-      echo "ERROR: git required."
-      exit 1
-    fi
-    echo "Download dotfiles end."
+  if exists_command "git"; then
+    git pull "${GIT_REMOTE_ORIGIN}" "${GIT_DEFAULT_BRANCH}"
   else
-    echo "ERROR: dotfiles required."
+    log_error "git required."
     exit 1
   fi
+
+  log_success "Download dotfiles"
 }
 
-function update() {
-  echo "           _        _                       __  _       _    __ _ _"
-  echo " _ __ ___ | |_     | | ____ _  __ _  ___   / /_| | ___ | |_ / _(_) | ___  ___"
-  echo "| '_ \` _ \\| __|____| |/ / _\` |/ _\` |/ _ \\ / / _\` |/ _ \\| __| |_| | |/ _ \\/ __|"
-  echo "| | | | | | ||_____|   < (_| | (_| |  __// / (_| | (_) | |_|  _| | |  __/\\__ \\"
-  echo "|_| |_| |_|\\__|    |_|\\_\\__,_|\\__, |\\___/_/ \\__,_|\\___/ \\__|_| |_|_|\\___||___/"
-  echo "                              |___/"
+update() {
+  show_banner
 
   download
 
-  cd ${DOTFILES_DIR}
+  cd "${DOTFILES_DIR}" || exit 1
   execute deploy
-  echo "Update dotfiles success!"
+
+  log_success "Update dotfiles complete!"
 }
 
 update

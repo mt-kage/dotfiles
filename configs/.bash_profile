@@ -1,8 +1,7 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
-
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
+export PATH="$HOME/.local/bin:$PATH";
+export PATH="$HOME/.opencode/bin:$PATH";
 
 if [[ `uname -m` == "arm64" ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -92,9 +91,9 @@ python_auto_activate() {
 }
 precmd_functions+=(python_auto_activate)
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
-[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+# sdkman
+if brew list sdkman-cli &> /dev/null; then
+	export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
+	[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+fi
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
