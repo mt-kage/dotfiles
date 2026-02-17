@@ -33,28 +33,30 @@ target_shell_path() {
 }
 
 switch_shell() {
+  show_banner
+
   local current target target_path
   current="$(current_shell)"
   target="$(target_shell)"
   target_path="$(target_shell_path)"
 
   if [[ ! -x "$target_path" ]]; then
-    log_error "$target_path が見つかりません。"
+    log_error "$target_path not found."
     exit 1
   fi
 
-  log_info "現在のシェル: $current"
-  log_info "切り替え先:   $target ($target_path)"
+  log_info "Current shell: $current"
+  log_info "Switch to:     $target ($target_path)"
 
-  read -rp "デフォルトシェルを $target に切り替えますか？ [y/N] " answer
+  read -rp "Switch default shell to $target? [y/N] " answer
   if [[ "${answer,,}" != "y" ]]; then
-    log_warn "キャンセルしました。"
+    log_warn "Cancelled."
     exit 0
   fi
 
   chsh -s "$target_path"
-  log_success "デフォルトシェルを $target に切り替えました。"
-  log_info "変更を反映するにはターミナルを再起動してください。"
+  log_success "Default shell has been switched to $target."
+  log_info "Please restart your terminal to apply the changes."
 }
 
 switch_shell
