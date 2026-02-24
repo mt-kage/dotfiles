@@ -3,7 +3,7 @@ set -euo pipefail
 
 readonly DOTFILES_DIR="$HOME/dotfiles"
 readonly SCRIPT_DIR="$DOTFILES_DIR/scripts"
-readonly GIT_DEFAULT_BRANCH="master"
+readonly GIT_DEFAULT_BRANCH="main"
 readonly ARCHIVE_FILE="${GIT_DEFAULT_BRANCH}.tar.gz"
 readonly ARCHIVE_URL="https://github.com/mt-kage/dotfiles/archive/${ARCHIVE_FILE}"
 
@@ -12,20 +12,20 @@ readonly GREEN='\033[0;32m'
 readonly BLUE='\033[0;34m'
 readonly NC='\033[0m'
 
-log_info()    { 
+log_info()    {
   echo -e "${BLUE}[INFO]${NC} $*";
 }
 
-log_success() { 
+log_success() {
   echo -e "${GREEN}[OK]${NC} $*";
 }
 
-log_error()   { 
+log_error()   {
   echo -e "${RED}[ERROR]${NC} $*" >&2;
 }
 
 exists_command() {
-  type -a "$1" >/dev/null 2>&1; 
+  type -a "$1" >/dev/null 2>&1;
 }
 
 execute() {

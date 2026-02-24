@@ -4,7 +4,7 @@ set -euo pipefail
 source "$(dirname "$0")/lib/common.sh"
 
 readonly GIT_REMOTE_ORIGIN="https://github.com/mt-kage/dotfiles.git"
-readonly GIT_DEFAULT_BRANCH="master"
+readonly GIT_DEFAULT_BRANCH="main"
 
 if [[ ! -d "${DOTFILES_DIR}" ]]; then
   echo "[ERROR] dotfiles not found: ${DOTFILES_DIR}" >&2

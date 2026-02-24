@@ -6,7 +6,7 @@ source "$(dirname "$0")/lib/common.sh"
 readonly GIT_REMOTE_HTTPS_URL="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_REMOTE_SSH_URL="git@github.com:mt-kage/dotfiles.git"
 readonly GIT_REMOTE_NAME="origin"
-readonly GIT_DEFAULT_BRANCH="master"
+readonly GIT_DEFAULT_BRANCH="main"
 
 initialize_brew() {
   if exists_command "brew"; then
