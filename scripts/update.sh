@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly DOTFILES_DIR="$HOME/dotfiles"
-readonly SCRIPT_DIR="$DOTFILES_DIR/scripts"
+source "$(dirname "$0")/lib/common.sh"
+
 readonly GIT_REMOTE_ORIGIN="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_DEFAULT_BRANCH="master"
 
@@ -10,8 +10,6 @@ if [[ ! -d "${DOTFILES_DIR}" ]]; then
   echo "[ERROR] dotfiles not found: ${DOTFILES_DIR}" >&2
   exit 1
 fi
-
-source "${SCRIPT_DIR}/lib/common.sh"
 
 download() {
   log_info "Download dotfiles start."
