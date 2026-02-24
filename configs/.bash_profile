@@ -1,8 +1,3 @@
-# Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH";
-export PATH="$HOME/.local/bin:$PATH";
-export PATH="$HOME/.opencode/bin:$PATH";
-
 if [[ `uname -m` == "arm64" ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 else
@@ -92,8 +87,4 @@ python_auto_activate() {
 precmd_functions+=(python_auto_activate)
 
 # sdkman
-if brew list sdkman-cli &> /dev/null; then
-	export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
-	[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-fi
-
+[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
