@@ -1,8 +1,3 @@
-# Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH";
-export PATH="$HOME/.local/bin:$PATH";
-export PATH="$HOME/.opencode/bin:$PATH";
-
 if [[ `uname -m` == "arm64" ]]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 else
@@ -25,6 +20,19 @@ setopt APPEND_HISTORY;
 # Share history between sessions
 setopt SHARE_HISTORY;
 
+# Use the text that has already been typed as the prefix for searching through
+# commands (i.e. more intelligent Up/Down behavior)
+if [[ "${TERM}" != "dumb" ]]; then
+	bindkey '^[[A' history-beginning-search-backward
+	bindkey '^[[B' history-beginning-search-forward
+	bindkey '^[OA' history-beginning-search-backward
+	bindkey '^[OB' history-beginning-search-forward
+
+	# Option + Delete / Option + Backspace for word deletion
+	bindkey '^[[3;3~' kill-word
+	bindkey '^[^?' backward-kill-word
+fi
+
 # Autocorrect typos in path names when using `cd`
 setopt CDSPELL 2>/dev/null;
 
@@ -39,6 +47,15 @@ autoload -Uz compinit && compinit;
 
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}';
+
+# Tab menu selection (Enhancement over bash's show-all-if-ambiguous)
+zstyle ':completion:*' menu select
+
+# If there are more than 200 possible completions for a word, ask to show them all (Same as completion-query-items 200)
+export LISTMAX=200
+
+# Immediately add a trailing slash to directory paths (Same as mark-symlinked-directories on)
+setopt MARK_DIRS
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 if [ -e "$HOME/.ssh/config" ]; then
@@ -87,7 +104,4 @@ python_auto_activate() {
 precmd_functions+=(python_auto_activate)
 
 # sdkman
-if brew list sdkman-cli &> /dev/null; then
-	export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
-	[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-fi
+[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
