@@ -13,3 +13,7 @@ done;
 unset file;
 
 export BASH_PROFILE_LOADED="true"
+
+# Load .bashrc for interactive login shells
+# (zsh loads .zshrc automatically, but bash does not load .bashrc)
+[ -n "${PS1:-}" ] && [ -f ~/.bashrc ] && source ~/.bashrc;
