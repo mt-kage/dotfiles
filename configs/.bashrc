@@ -82,7 +82,7 @@ python_auto_activate() {
 		fi
 	fi
 }
-precmd_functions+=(python_auto_activate)
+PROMPT_COMMAND="python_auto_activate; ${PROMPT_COMMAND:-}"
 
 # sdkman
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
