@@ -18,6 +18,9 @@ setopt APPEND_HISTORY;
 # Share history between sessions
 setopt SHARE_HISTORY;
 
+# Enable Emacs keybind
+bindkey -e
+
 # Use the text that has already been typed as the prefix for searching through
 # commands (i.e. more intelligent Up/Down behavior)
 if [[ "${TERM}" != "dumb" ]]; then
