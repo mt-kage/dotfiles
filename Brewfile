@@ -50,6 +50,7 @@ brew "yq"
 brew "zlib"
 brew "sdkman/tap/sdkman-cli"
 
+if OS.mac?
 cask_args appdir: "/Applications"
 
 cask "1password"
@@ -94,3 +95,4 @@ mas "RunCat", id: 1429033973
 mas "Slack", id: 803453959
 mas "TweetDeck", id: 485812721
 mas "Xcode", id: 497799835
+end

@@ -18,6 +18,8 @@ initialize_brew() {
 
   if is_arm; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif is_linux; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   else
     eval "$(/usr/local/bin/brew shellenv)"
   fi
@@ -47,6 +49,14 @@ initialize_anyenv() {
   if exists_command "anyenv"; then
     log_info "initialize anyenv..."
     anyenv init
+
+    local anyenv_plugins_dir="$(anyenv root)/plugins"
+    if [[ ! -d "${anyenv_plugins_dir}/anyenv-update" ]]; then
+      log_info "install anyenv-update plugin..."
+      mkdir -p "${anyenv_plugins_dir}"
+      git clone https://github.com/znz/anyenv-update.git "${anyenv_plugins_dir}/anyenv-update"
+    fi
+
     log_success "initialize anyenv"
   else
     log_warn "anyenv not found. skipped."
@@ -90,12 +100,29 @@ initialize_macos() {
   log_success "initialize macos"
 }
 
+initialize_wsl() {
+  if ! is_wsl; then
+    log_warn "not WSL. skipped."
+    return
+  fi
+
+  log_info "initialize wsl..."
+
+  # mkdir
+  mkdir -p ~/Projects
+
+  log_success "initialize wsl"
+}
+
 initialize() {
   log_info "initialize start."
   initialize_brew
+
+  initialize_macos
+  initialize_wsl
+
   initialize_dotfiles
   initialize_anyenv
-  initialize_macos
   log_success "initialize complete!"
 }
 

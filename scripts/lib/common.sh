@@ -13,17 +13,17 @@ readonly YELLOW='\033[0;33m'
 readonly BLUE='\033[0;34m'
 readonly NC='\033[0m' # No Color
 
-log_info()    { 
-  echo -e "${BLUE}[INFO]${NC} $*"; 
+log_info()    {
+  echo -e "${BLUE}[INFO]${NC} $*";
 }
-log_success() { 
-  echo -e "${GREEN}[OK]${NC} $*"; 
+log_success() {
+  echo -e "${GREEN}[OK]${NC} $*";
 }
-log_warn()    { 
-  echo -e "${YELLOW}[WARN]${NC} $*" >&2; 
+log_warn()    {
+  echo -e "${YELLOW}[WARN]${NC} $*" >&2;
 }
-log_error()   { 
-  echo -e "${RED}[ERROR]${NC} $*" >&2; 
+log_error()   {
+  echo -e "${RED}[ERROR]${NC} $*" >&2;
 }
 
 exists_command() {
@@ -43,11 +43,25 @@ is_macos() {
   [[ "$(uname)" == "Darwin" ]]
 }
 
+is_linux() {
+  [[ "$(uname)" == "Linux" ]]
+}
+
+is_wsl() {
+  if is_linux && uname -r | grep -qi 'microsoft'; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 show_banner() {
-  echo "           _        _                       __  _       _    __ _ _"
-  echo " _ __ ___ | |_     | | ____ _  __ _  ___   / /_| | ___ | |_ / _(_) | ___  ___"
-  echo "| '_ \` _ \\| __|____| |/ / _\` |/ _\` |/ _ \\ / / _\` |/ _ \\| __| |_| | |/ _ \\/ __|"
-  echo "| | | | | | ||_____|   < (_| | (_| |  __// / (_| | (_) | |_|  _| | |  __/\\__ \\"
-  echo "|_| |_| |_|\\__|    |_|\\_\\__,_|\\__, |\\___/_/ \\__,_|\\___/ \\__|_| |_|_|\\___||___/"
-  echo "                              |___/"
+  cat <<'EOF'
+           _        _                       __  _       _    __ _ _
+ _ __ ___ | |_     | | ____ _  __ _  ___   / /_| | ___ | |_ / _(_) | ___  ___
+| '_ ` _ \| __|____| |/ / _` |/ _` |/ _ \ / / _` |/ _ \| __| |_| | |/ _ \/ __|
+| | | | | | ||_____|   < (_| | (_| |  __// / (_| | (_) | |_|  _| | |  __/\__ \
+|_| |_| |_|\__|    |_|\_\__,_|\__, |\___/_/ \__,_|\___/ \__|_| |_|_|\___||___/
+                              |___/
+EOF
 }

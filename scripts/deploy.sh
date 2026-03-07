@@ -31,6 +31,11 @@ deploy_vim() {
 }
 
 deploy_karabiner() {
+  if ! is_macos; then
+    log_info "skip deploy karabiner (not macOS)"
+    return
+  fi
+
   log_info "deploy karabiner start..."
   if [[ "${DRY_RUN}" == "--dry-run" ]]; then
     echo "  (dry-run) ln -fvns \"${KARABINER_DIR}/karabiner.json\" \"${HOME}/.config/karabiner/karabiner.json\""
