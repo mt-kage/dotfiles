@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$(dirname "$0")/lib/common.sh"
+source "$(dirname "$0")/common.sh"
 
 readonly DRY_RUN="${1:-}"
 
@@ -84,22 +84,28 @@ deploy_karabiner() {
   log_success "deploy karabiner"
 }
 
+deploy_mise() {
+  log_info "deploy mise start..."
+  mise -C ~ install
+  log_success "deploy mise"
+}
+
 deploy() {
   log_info "deploy start."
-  [[ "${DRY_RUN}" == "--dry-run" ]] && log_warn "DRY-RUN モード: 実際の変更は行いません"
+  [[ "${DRY_RUN}" == "--dry-run" ]] && log_warn "DRY-RUN mode: no changes will be made"
 
   cleanup_old_configs
   deploy_home
   deploy_config
   deploy_karabiner
+  deploy_mise
 
   if [[ "${DRY_RUN}" != "--dry-run" ]]; then
-    if [[ -n "${ZSH_VERSION:-}" ]]; then
-      source ~/.zshenv
-      source ~/.config/zsh/.zshrc
-    else
-      source ~/.bash_profile
-    fi
+    # Reload shell config in a login shell subprocess.
+    # Cannot source zsh configs from bash (or vice versa), so spawn the
+    # user's login shell instead.
+    log_info "reloading shell config..."
+    "$SHELL" -l -c 'echo "shell config loaded successfully"'
   fi
 
   log_success "deploy complete!"

@@ -83,14 +83,14 @@ if which brew &>/dev/null && [ -f "$(brew --prefix)/Caskroom/google-cloud-sdk/la
 	source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc";
 fi;
 
-# anyenv.
-if which anyenv &>/dev/null; then
-	eval "$(anyenv init - --no-rehash)";
-fi;
-
 # direnv
 if which direnv &>/dev/null; then
 	eval "$(direnv hook zsh)";
+fi;
+
+# mise
+if which mise &> /dev/null; then
+	eval "$(mise activate zsh)";
 fi;
 
 # python auto activate

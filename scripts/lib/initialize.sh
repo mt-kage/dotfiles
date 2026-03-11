@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$(dirname "$0")/lib/common.sh"
+source "$(dirname "$0")/common.sh"
 
 readonly GIT_REMOTE_HTTPS_URL="https://github.com/mt-kage/dotfiles.git"
 readonly GIT_REMOTE_SSH_URL="git@github.com:mt-kage/dotfiles.git"
@@ -43,24 +43,6 @@ initialize_dotfiles() {
   git pull "${GIT_REMOTE_NAME}" "${GIT_DEFAULT_BRANCH}"
   git remote set-url "${GIT_REMOTE_NAME}" "${GIT_REMOTE_SSH_URL}"
   log_success "initialize dotfiles"
-}
-
-initialize_anyenv() {
-  if exists_command "anyenv"; then
-    log_info "initialize anyenv..."
-    anyenv init
-
-    local anyenv_plugins_dir="$(anyenv root)/plugins"
-    if [[ ! -d "${anyenv_plugins_dir}/anyenv-update" ]]; then
-      log_info "install anyenv-update plugin..."
-      mkdir -p "${anyenv_plugins_dir}"
-      git clone https://github.com/znz/anyenv-update.git "${anyenv_plugins_dir}/anyenv-update"
-    fi
-
-    log_success "initialize anyenv"
-  else
-    log_warn "anyenv not found. skipped."
-  fi
 }
 
 initialize_macos() {
@@ -122,7 +104,6 @@ initialize() {
   initialize_wsl
 
   initialize_dotfiles
-  initialize_anyenv
   log_success "initialize complete!"
 }
 

@@ -32,8 +32,8 @@ exists_command() {
 }
 
 execute() {
-  log_info "[${SCRIPT_DIR}/${1}.sh] START"
-  /bin/bash "${SCRIPT_DIR}/${1}.sh"
+  log_info "[${SCRIPT_DIR}/lib/${1}.sh] START"
+  /bin/bash "${SCRIPT_DIR}/lib/${1}.sh"
 }
 
 is_arm() {
