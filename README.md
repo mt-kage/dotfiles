@@ -10,5 +10,5 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/mt-kage/dotfiles/main/sc
 ## Update
 
 ```
-dot; bash scripts/update.sh
+dot-update
 ```
