@@ -86,7 +86,7 @@
 [core]
 
 	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = /Users/yusuke/.gitignore_global
+	excludesfile = $XDG_CONFIG_HOME/git/ignore
 	attributesfile = $XDG_CONFIG_HOME/git/attributes
 
 	# Treat spaces before tabs and all kinds of trailing whitespace as an error
