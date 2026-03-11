@@ -2,3 +2,6 @@
 node = "22"
 python = "3.13"
 go = "1.25"
+
+[settings]
+idiomatic_version_file_enable_tools = ["python", "node", "go"]
