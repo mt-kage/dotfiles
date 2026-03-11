@@ -7,25 +7,30 @@ readonly DRY_RUN="${1:-}"
 
 cleanup_old_configs() {
   log_info "cleanup old configs start..."
-  
-  local old_files=(
-    .aliases .bash_profile .bash_prompt .bashrc .curlrc .digrc .editorconfig
-    .exports .gitconfig .gitignore .gvimrc .hgignore .hushlogin .inputrc
-    .screenrc .vimrc .wgetrc .zprofile .zsh_prompt .zshrc
-  )
 
-  for file in "${old_files[@]}"; do
-    local target="${HOME}/${file}"
-    if [[ -L "${target}" ]]; then
-      if [[ "${DRY_RUN}" == "--dry-run" ]]; then
-        echo "  (dry-run) rm -f \"${target}\""
-      else
-        rm -f "${target}"
-        log_info "removed old symlink: ${target}"
+  local -a search_dirs=("${HOME}" "${HOME}/.config")
+  local removed=0
+
+  for search_dir in "${search_dirs[@]}"; do
+    [[ ! -d "${search_dir}" ]] && continue
+
+    while IFS= read -r -d '' link; do
+      local target
+      target="$(readlink "${link}")"
+      # Only remove symlinks pointing to the dotfiles repository
+      if [[ "${target}" == "${DOTFILES_DIR}/"* ]]; then
+        if [[ "${DRY_RUN}" == "--dry-run" ]]; then
+          echo "  (dry-run) rm -f \"${link}\""
+        else
+          rm -f "${link}"
+          log_info "removed symlink: ${link} -> ${target}"
+          (( removed++ )) || true
+        fi
       fi
-    fi
+    done < <(find "${search_dir}" -maxdepth 1 -type l -print0)
   done
-  log_success "cleanup old configs"
+
+  log_success "cleanup old configs (${removed} removed)"
 }
 
 deploy_home() {
