@@ -185,8 +185,13 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
 [user]
 	name = "mt-kage"
 	email = "mail@mt-kage.dev"
+
 [init]
 	defaultBranch = main
+
+[include]
+  path=config.local
