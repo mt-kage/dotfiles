@@ -3,7 +3,8 @@
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 readonly DOTFILES_DIR
 readonly SCRIPT_DIR="${DOTFILES_DIR}/scripts"
-readonly CONFIGS_DIR="${DOTFILES_DIR}/configs"
+readonly HOME_DIR="${DOTFILES_DIR}/home"
+readonly CONFIG_DIR="${DOTFILES_DIR}/config"
 readonly VIM_DIR="${DOTFILES_DIR}/vim"
 readonly KARABINER_DIR="${DOTFILES_DIR}/karabiner"
 

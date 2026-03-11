@@ -4,7 +4,7 @@ if [ -z "$BASH_PROFILE_LOADED" ]; then
 fi
 
 # Load the shell dotfiles, and then some:
-for file in ~/.{bash_prompt,aliases}; do
+for file in "${XDG_CONFIG_HOME}/bash"/.bash_prompt "${XDG_SHARED_CONFIG_HOME}"/.aliases; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -14,6 +14,8 @@ shopt -s nocaseglob;
 
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend;
+export HISTFILE="$XDG_STATE_HOME/bash/history"
+mkdir -p "$XDG_STATE_HOME/bash"
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell;

@@ -1,10 +1,10 @@
 # Load zprofile if not already loaded (for non-login shells)
 if [ -z "$ZPROFILE_LOADED" ]; then
-    [ -n "$PS1" ] && [ -f ~/.zprofile ] && source ~/.zprofile;
+    [ -n "$PS1" ] && [ -f $ZDOTDIR/.zprofile ] && source $ZDOTDIR/.zprofile;
 fi
 
 # Load the shell dotfiles, and then some:
-for file in ~/.{zsh_prompt,aliases}; do
+for file in "${ZDOTDIR}"/.zsh_prompt "${XDG_SHARED_CONFIG_HOME}"/.aliases; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -14,6 +14,8 @@ setopt NO_CASE_GLOB;
 
 # Append to the zsh history file, rather than overwriting it
 setopt APPEND_HISTORY;
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+mkdir -p "$XDG_STATE_HOME/zsh"
 
 # Share history between sessions
 setopt SHARE_HISTORY;
@@ -44,7 +46,8 @@ setopt EXTENDED_GLOB;
 setopt AUTO_CD;
 
 # Initialize completion system
-autoload -Uz compinit && compinit;
+mkdir -p "$XDG_CACHE_HOME/zsh"
+autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}';
