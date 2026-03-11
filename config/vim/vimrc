@@ -1,3 +1,6 @@
+" Add XDG config dir to runtimepath so vim finds colors/, syntax/, etc.
+set runtimepath^=$XDG_CONFIG_HOME/vim
+
 " Use the Solarized Dark theme
 set background=dark
 colorscheme solarized
@@ -25,6 +28,11 @@ let mapleader=","
 set binary
 set noeol
 " Centralize backups, swapfiles and undo history
+for s:dir in ['backups', 'swaps', 'undo']
+	if !isdirectory($XDG_STATE_HOME . '/vim/' . s:dir)
+		call mkdir($XDG_STATE_HOME . '/vim/' . s:dir, 'p')
+	endif
+endfor
 set backupdir=$XDG_STATE_HOME/vim/backups
 set directory=$XDG_STATE_HOME/vim/swaps
 if exists("&undodir")

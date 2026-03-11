@@ -65,10 +65,6 @@ deploy_config() {
   log_success "deploy XDG configs"
 }
 
-deploy_vim() {
-  log_info "skip legacy deploy_vim (moved to config/vim)"
-}
-
 deploy_karabiner() {
   if ! is_macos; then
     log_info "skip deploy karabiner (not macOS)"
