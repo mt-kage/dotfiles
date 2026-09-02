@@ -16,16 +16,22 @@ initialize_brew() {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  if is_arm; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+  if is_macos; then
+    if is_arm && [ -x "/opt/homebrew/bin/brew" ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x "/usr/local/bin/brew" ]; then
+      eval "$(/usr/local/bin/brew shellenv)"
+    fi
   elif is_linux; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  else
-    eval "$(/usr/local/bin/brew shellenv)"
+    if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    elif [ -x "$HOME/.linuxbrew/bin/brew" ]; then
+      eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+    fi
   fi
 
   log_info "initialize brew..."
-  brew doctor
+  brew doctor || true
   brew update
   brew upgrade
   brew bundle
@@ -90,19 +96,47 @@ initialize_wsl() {
 
   log_info "initialize wsl..."
 
+  # Install required packages on Ubuntu / Debian for Linuxbrew and build dependencies
+  if is_ubuntu; then
+    log_info "installing apt packages (build-essential, mise build dependencies, wslu)..."
+    sudo apt-get update -y
+    sudo apt-get install -y \
+      build-essential \
+      procps \
+      curl \
+      file \
+      git \
+      zsh \
+      wslu \
+      libssl-dev \
+      zlib1g-dev \
+      libbz2-dev \
+      libreadline-dev \
+      libsqlite3-dev \
+      libffi-dev \
+      liblzma-dev
+  fi
+
   # mkdir
   mkdir -p ~/Projects
+
+  # Configure Git Credential Manager for Windows if present
+  local gcm_path="/mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe"
+  if [[ -f "${gcm_path}" ]]; then
+    log_info "Configuring Git Credential Manager for Windows..."
+    git config --global credential.helper "${gcm_path}"
+  fi
 
   log_success "initialize wsl"
 }
 
 initialize() {
   log_info "initialize start."
-  initialize_brew
 
   initialize_macos
   initialize_wsl
 
+  initialize_brew
   initialize_dotfiles
   log_success "initialize complete!"
 }

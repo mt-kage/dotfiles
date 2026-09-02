@@ -1,13 +1,25 @@
-export PATH="$HOME/bin:$PATH";
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.opencode/bin:$PATH"
-export PATH="$(brew --prefix bison)/bin:$PATH"
-export PATH="$(brew --prefix libxml2)/bin:$PATH"
-export PATH="$(brew --prefix bzip2)/bin:$PATH"
-export PATH="$(brew --prefix curl)/bin:$PATH"
-export PATH="$(brew --prefix libiconv)/bin:$PATH"
-export PATH="$(brew --prefix krb5)/bin:$PATH"
-export PATH="$(brew --prefix openssl@3)/bin:$PATH"
-export PATH="$(brew --prefix icu4c)/bin:$PATH"
-export PATH="$(brew --prefix tidy-html5)/lib:$PATH"
-export PATH="$(brew --prefix protobuf@3)/bin:$PATH"
+_add_to_path() {
+  if [ -d "$1" ]; then
+    export PATH="$1:$PATH"
+  fi
+}
+
+_add_to_path "$HOME/bin"
+_add_to_path "$HOME/.local/bin"
+_add_to_path "$HOME/.opencode/bin"
+
+if [ -n "${HOMEBREW_PREFIX:-}" ]; then
+  _add_to_path "${HOMEBREW_PREFIX}/opt/bison/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/libxml2/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/bzip2/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/curl/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/libiconv/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/krb5/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/openssl@3/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/icu4c/bin"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/tidy-html5/lib"
+  _add_to_path "${HOMEBREW_PREFIX}/opt/protobuf@3/bin"
+fi
+
+unset -f _add_to_path
+

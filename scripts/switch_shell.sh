@@ -3,9 +3,6 @@ set -euo pipefail
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
-readonly BASH_PATH="/bin/bash"
-readonly ZSH_PATH="/bin/zsh"
-
 current_shell() {
   basename "$SHELL"
 }
@@ -25,10 +22,14 @@ target_shell_path() {
   local target
   target="$(target_shell)"
 
-  if [[ "$target" == "bash" ]]; then
-    echo "$BASH_PATH"
+  local shell_bin
+  shell_bin="$(command -v "$target" 2>/dev/null || true)"
+  if [[ -n "$shell_bin" && -x "$shell_bin" ]]; then
+    echo "$shell_bin"
+  elif [[ "$target" == "bash" ]]; then
+    echo "/bin/bash"
   else
-    echo "$ZSH_PATH"
+    echo "/bin/zsh"
   fi
 }
 

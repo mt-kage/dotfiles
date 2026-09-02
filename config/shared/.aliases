@@ -33,13 +33,44 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# OS / WSL detection for aliases
+_is_wsl=0
+_is_macos=0
+if [ "$(uname)" = "Darwin" ]; then
+	_is_macos=1
+elif [ "$(uname)" = "Linux" ]; then
+	if [ -n "${WSL_DISTRO_NAME:-}" ] || [ -n "${WSL_INTEROP:-}" ] || uname -r | grep -qi 'microsoft' || { [ -f /proc/version ] && grep -qi 'microsoft' /proc/version; }; then
+		_is_wsl=1
+	fi
+fi
+
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
+if [ "$_is_macos" -eq 1 ]; then
+	alias localip="ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null"
+	# Show/hide hidden files in Finder
+	alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+	alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+else
+	alias localip="hostname -I | awk '{print \$1}'"
+fi
 
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+# WSL Interop (Windows Integration)
+if [ "$_is_wsl" -eq 1 ]; then
+	if type clip.exe >/dev/null 2>&1; then
+		alias pbcopy="clip.exe"
+	fi
+	if type powershell.exe >/dev/null 2>&1; then
+		alias pbpaste="powershell.exe -NoProfile -Command Get-Clipboard 2>/dev/null | tr -d '\r'"
+	fi
+	if type wslview >/dev/null 2>&1; then
+		alias open="wslview"
+	elif type explorer.exe >/dev/null 2>&1; then
+		alias open="explorer.exe"
+	fi
+fi
+
+unset _is_wsl _is_macos
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"

@@ -37,7 +37,7 @@ execute() {
 }
 
 is_arm() {
-  [[ "$(uname -m)" == "arm64" ]]
+  [[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]]
 }
 
 is_macos() {
@@ -49,7 +49,15 @@ is_linux() {
 }
 
 is_wsl() {
-  if is_linux && uname -r | grep -qi 'microsoft'; then
+  if is_linux && { [[ -n "${WSL_DISTRO_NAME:-}" ]] || [[ -n "${WSL_INTEROP:-}" ]] || uname -r | grep -qi 'microsoft' || ( [[ -f /proc/version ]] && grep -qi 'microsoft' /proc/version ); }; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+is_ubuntu() {
+  if is_linux && [[ -f /etc/os-release ]] && grep -qiE 'ID(=|=")(ubuntu|debian)' /etc/os-release; then
     return 0
   else
     return 1
